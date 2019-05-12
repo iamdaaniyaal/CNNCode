@@ -62,13 +62,13 @@ train_datagen=ImageDataGenerator(
 
 test_datagen=ImageDataGenerator(rescale=1./255)
 
-training_set=train_datagen.flow_from_directory("Dataset/training_set",
+training_set=train_datagen.flow_from_directory("dataset/training_set",
                                                target_size = (200,200),
                                                color_mode='grayscale',
                                                batch_size=10,
                                                class_mode='categorical')
 
-test_set=test_datagen.flow_from_directory("Dataset/test_set",
+test_set=test_datagen.flow_from_directory("dataset/test_set",
                                                target_size = (200,200),
                                                color_mode='grayscale',
                                                batch_size=10,
@@ -82,9 +82,9 @@ test_set=test_datagen.flow_from_directory("Dataset/test_set",
 #finally, start training
 model.fit_generator(training_set,
                          samples_per_epoch = 1956,
-                         nb_epoch = 10,
+                         nb_epoch = 75,
                          validation_data = test_set,
-                         nb_val_samples = 320)
+                         nb_val_samples = 100)
 
 
 #after 10 epochs:
@@ -104,20 +104,19 @@ print("Model has been saved.")
 
 
 #testing it to a random image from the test set
-img = load_img('Dataset/test_set/stop/stop26.jpg',target_size=(200,200))
-x=array(img)
-img = cv2.cvtColor( x, cv2.COLOR_RGB2GRAY )
-img=img.reshape((1,)+img.shape)
-img=img.reshape(img.shape+(1,))
+# img = load_img('/Users/daaniyaal/Desktop/cnn/dataset/test_set/left/left-00015.jpg',target_size=(200,200))
+# x=array(img)
+# img = cv2.cvtColor( x, cv2.COLOR_RGB2GRAY )
+# img=img.reshape((1,)+img.shape)
+# img=img.reshape(img.shape+(1,))
 
-test_datagen = ImageDataGenerator(rescale=1./255)
-m=test_datagen.flow(img,batch_size=1)
-y_pred=model.predict_generator(m,1)
+# test_datagen = ImageDataGenerator(rescale=1./255)
+# m=test_datagen.flow(img,batch_size=1)
+# y_pred=model.predict_generator(m,1)
 
 
-#save the model schema in a pic
-plot_model(model, to_file='model.png', show_shapes = True)
-
+# #save the model schema in a pic
+# plot_model(model, to_file='model.png', show_shapes = True)
 
 
 
